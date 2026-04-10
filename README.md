@@ -703,7 +703,7 @@ openclaw_bridge:
 ## 🙏 Acknowledgments
 
 Inspired by:
-
+- 🔬 [AutoResearchClaw](https://github.com/aiming-lab/AutoResearchClaw)) (aiming-lab) — Automated research agent
 - 🔬 [AI Scientist](https://github.com/SakanaAI/AI-Scientist) (Sakana AI) — Automated research pioneer
 - 🧠 [AutoResearch](https://github.com/karpathy/autoresearch) (Andrej Karpathy) — End-to-end research automation
 - 🌐 [FARS](https://analemma.ai/blog/introducing-fars/) (Analemma) — Fully Automated Research System
