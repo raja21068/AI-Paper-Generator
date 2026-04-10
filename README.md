@@ -1,113 +1,194 @@
+
+# 🦞 AI-Paper-Generator
 <p align="center">
   <img src="images/framework_v2.png" width="580" alt="AutoResearch">
 </p>
-<p align="center">
-  <b>Type a research topic. Get a conference-ready paper.</b>
-</p>
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT"></a>
-  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"></a>
-  <a href="https://discord.gg/u4ksqW5P"><img src="https://img.shields.io/badge/Discord-Join%20us-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
-</p>
----
-AutoResearch - The Autonomous Research Pipeline
-AutoResearch is an AI-powered tool that helps researchers generate high-quality academic papers. Simply input a research topic, and the system will automatically search for related papers, design experiments, and write a comprehensive academic paper complete with citations, figures, and LaTeX formatting.
+**Chat an idea. Get a paper.**
+
+You type a research topic. AI-Paper-Generator finds real papers, runs experiments, analyzes results, and hands you a conference-ready PDF — automatically.
+
 ```bash
-auto-research run --topic "Attention mechanisms in protein folding" --auto-approve
+researchclaw run --topic "Future of AI chips in China" --auto-approve
 ```
+
 ---
-Quick Start
-1. Clone and Install
+
+## What you get
+
+| File | What it is |
+|------|------------|
+| `paper_draft.md` | Full paper — Intro, Method, Experiments, Results, Conclusion |
+| `paper.tex` | Conference-ready LaTeX (NeurIPS / ICLR / ICML) |
+| `references.bib` | Real, verified citations from arXiv, Semantic Scholar, OpenAlex |
+| `experiment runs/` | Generated Python code + sandbox results + metrics |
+| `charts/` | Auto-generated figures with error bars |
+| `reviews.md` | AI peer review with consistency checks |
+| `deliverables/` | Everything in one folder, ready for Overleaf |
+
+---
+
+## Get started
+
+**1. Install**
 ```bash
-git clone https://github.com/aiming-lab/AutoResearch.git
-cd AutoResearch
+git clone https://github.com/raja21068/AI-Paper-Generator.git
+cd AI-Paper-Generator
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e .
 ```
-2. Configure
+
+**2. Set up**
 ```bash
-cp config.example.yaml config.yaml
-# Open config.yaml and set your API key and model
+researchclaw setup    # installs extras, checks Docker/LaTeX
+researchclaw init     # choose your LLM provider
 ```
-Or use the interactive setup:
-```bash
-auto-research setup   # checks Docker, LaTeX, and extras
-auto-research init    # guided config wizard
-```
-3. Run
+
+**3. Add your API key**
 ```bash
 export OPENAI_API_KEY="sk-..."
+```
 
-auto-research run --topic "Your research idea" --auto-approve
-```
-The output will be saved in `artifacts/rc-YYYYMMDD-HHMMSS/deliverables/` — open `paper_draft.md` to read your paper, or upload `deliverables/` directly to Overleaf.
----
-What You Get
-File	What it is
-`paper_draft.md`	Full paper — Introduction, Method, Experiments, Results, Conclusion
-`paper.tex`	Conference-ready LaTeX (NeurIPS / ICLR / ICML templates)
-`references.bib`	Real, verified citations — hallucinated references are automatically removed
-`experiment runs/`	The Python code that was generated, run, and debugged
-`charts/`	Auto-generated figures with error bars and confidence intervals
-`reviews.md`	AI peer review with evidence-consistency checks
----
-Modes of Operation
-🤖 Fully Autonomous Mode
-Walk away. The pipeline will handle everything, from literature search to final PDF.
+**4. Run**
 ```bash
-auto-research run --topic "..." --auto-approve
+# Fully automatic — walk away
+researchclaw run --topic "Your research idea" --auto-approve
+
+# Collaborative — you guide the key decisions
+researchclaw run --topic "Your research idea" --mode co-pilot
 ```
-🧑‍✈️ Co-Pilot Mode
-The system runs autonomously but pauses at three key moments for your input: choosing hypotheses, reviewing the experiment design, and co-writing the paper.
+
+Output lands in `artifacts/rc-YYYYMMDD-HHMMSS/deliverables/`.
+
+---
+
+## Two ways to use it
+
+### 🤖 Fully autonomous
+Type a topic, walk away. The AI handles everything from literature search to final PDF.
+
+Best for: exploring ideas quickly, generating first drafts.
+
 ```bash
-auto-research run --topic "..." --mode co-pilot
+researchclaw run --topic "..." --auto-approve
 ```
-Mode	Command	Best for
-Full auto	`--auto-approve`	Fast first drafts
-Gate only	`--mode gate-only`	Light oversight at 3 checkpoints
-Co-pilot	`--mode co-pilot`	Hands-on collaboration
-Step-by-step	`--mode step-by-step`	Learning the pipeline
-→ Full guide: docs/co-pilot.md
----
-How It Works
-The pipeline runs 23 stages across 8 phases. Gates (⛔) pause for your approval — skip them all with `--auto-approve`.
+
+### 🧑‍✈️ Co-pilot mode
+The AI runs most stages on its own, but pauses at key moments for your input — choosing hypotheses, reviewing experiment design, co-writing the paper.
+
+Best for: research you plan to actually submit.
+
 ```bash
-Phase A  Scoping      1–2    Break the topic into research questions
-Phase B  Literature   3–6    Find real papers from arXiv, Semantic Scholar, OpenAlex  ⛔
-Phase C  Synthesis    7–8    Cluster findings, generate testable hypotheses
-Phase D  Design       9–11   Plan the experiment, write hardware-aware Python code  ⛔
-Phase E  Execution    12–13  Run code in sandbox, self-heal bugs, iterate up to 10×
-Phase F  Analysis     14–15  Analyze results — then decide: proceed, refine, or pivot
-Phase G  Writing      16–19  Outline → draft (5,000+ words) → peer review → revise
-Phase H  Finalize     20–23  Quality gate, LaTeX export, verify every citation  ⛔
+researchclaw run --topic "..." --mode co-pilot
 ```
+
 ---
-Key Features
-Real citations, not hallucinations.  
-Every reference is verified against arXiv, CrossRef, and Semantic Scholar through a 4-layer verification pipeline. Unverified references are automatically removed.
-Self-healing experiments.  
-If the generated code crashes, the AI will patch the code and rerun it — up to 10 times before it stops.
-Anti-fabrication guard.  
-Numbers in the paper must come from actual experiment results. Unverified figures are blocked before they reach the writing stage.
-Contradiction detection.  
-When two sources make opposing claims, the system flags them — so you know where the science is unsettled before committing to a position.
-Self-learning across runs.  
-Lessons from failures are captured and injected into future runs, improving the pipeline over time and avoiding repeated mistakes.
-Runs anywhere.  
-Works via CLI, OpenClaw, and ACP-compatible agents. Can be triggered from Discord, Telegram, or Slack.
+
+## How much control do you want?
+
+| Mode | Command | Best for |
+|------|---------|----------|
+| Full auto | `--auto-approve` | Hands-off, quick drafts |
+| Gate only | `--mode gate-only` | Approve at 3 key checkpoints |
+| Co-pilot | `--mode co-pilot` | Deep collaboration on hypotheses + writing |
+| Step-by-step | `--mode step-by-step` | Learning how the pipeline works |
+| Custom | `--mode custom` | Define per-stage rules in config |
+
 ---
-Supported LLMs and Agents
-Any OpenAI-compatible API works. Supported agents include:
+
+## The pipeline — 23 stages, 8 phases
+
+```
+Phase A  Scoping        Stages  1–2   Breaks topic into research questions
+Phase B  Literature     Stages  3–6   Finds real papers ⛔ gate
+Phase C  Synthesis      Stages  7–8   Clusters findings, generates hypotheses
+Phase D  Design         Stages  9–11  Plans + writes experiment code ⛔ gate
+Phase E  Execution      Stages 12–13  Runs code, self-heals bugs, iterates
+Phase F  Analysis       Stages 14–15  Analyzes results, decides: proceed / refine / pivot
+Phase G  Writing        Stages 16–19  Outlines → drafts → reviews → revises
+Phase H  Finalize       Stages 20–23  Quality check, LaTeX export, citation verify ⛔ gate
+```
+
+> **⛔ Gate stages** pause for your approval. Skip them all with `--auto-approve`.
+
+---
+
+## Key features
+
+- **Real citations only** — searches arXiv, Semantic Scholar, and OpenAlex. Verifies every reference through 4 layers. Hallucinated refs are automatically removed.
+
+- **Self-healing experiments** — if the generated code crashes, the AI reads the error, patches the code, and reruns — up to 10 times.
+
+- **Anti-fabrication guard** — numbers in the paper must come from actual experiment results. Unverified figures are blocked.
+
+- **Contradiction detection** — flags when two sources directly disagree, so you know where the science is unsettled.
+
+- **Claim registry** — tracks every factual claim back to its source and measures hallucination risk before you publish.
+
+- **Self-learning** — lessons from failures are saved as reusable skills. Future runs avoid the same mistakes.
+
+- **Cost guardrails** — set a USD budget. The pipeline pauses when spending approaches the limit.
+
+- **Run anywhere** — CLI, Claude Code, Codex CLI, Gemini CLI, or any ACP-compatible agent. Also works via Discord, Telegram, and Slack.
+
+---
+
+## Supported LLMs and agents
+
+Works with any OpenAI-compatible API. Also supports these CLI agents — no API key needed:
+
+| Agent | Provider |
+|-------|----------|
+| Claude Code | Anthropic |
+| Codex CLI | OpenAI |
+| Copilot CLI | GitHub |
+| Gemini CLI | Google |
+| Kimi CLI | Moonshot |
+| OpenCode | SST |
+
 ```yaml
-# config.yaml
+# config.arc.yaml — ACP example
 llm:
   provider: "acp"
   acp:
-    agent: "claude"   # claude | codex | gemini | gh | kimi | opencode
+    agent: "claude"   # any ACP agent command
 ```
+
 ---
-Ethics
-AutoResearch produces drafts. Before submitting anywhere:
-Verify all claims, numbers, and citations yourself
-Disclose AI assistance to the venue — most conferences now require this
-Do not use this tool to generate fraudulent submissions
+
+## Minimum config
+
+```yaml
+project:
+  name: "my-research"
+
+research:
+  topic: "Your research topic"
+
+llm:
+  base_url: "https://api.openai.com/v1"
+  api_key_env: "OPENAI_API_KEY"
+  primary_model: "gpt-4o"
+  fallback_models: ["gpt-4o-mini"]
+
+experiment:
+  mode: "sandbox"
+  sandbox:
+    python_path: ".venv/bin/python"
+```
+
+---
+
+## ⚠️ Ethics — please read before submitting anything
+
+AI-Paper-Generator generates **drafts**, not finished papers. Before submitting anywhere:
+
+- Verify all claims, citations, and experiment results yourself
+- Disclose AI assistance to the target venue (most conferences require this now)
+- Do not use this tool to generate fraudulent submissions or paper mills
+
+You are responsible for the content of any paper you submit.
+
+---
+
+
+
