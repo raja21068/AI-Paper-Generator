@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/logo.png" width="580" alt="AutoResearch">
+  <img src="images/framework_v2.png" width="580" alt="AutoResearch">
 </p>
 <p align="center">
   <b>Type a research topic. Get a conference-ready paper.</b>
