@@ -15,15 +15,17 @@ researchclaw run --topic "Future of AI chips in China" --auto-approve
 
 ## What you get
 
-| File | What it is |
-|------|------------|
-| `paper_draft.md` | Full paper — Intro, Method, Experiments, Results, Conclusion |
-| `paper.tex` | Conference-ready LaTeX (NeurIPS / ICLR / ICML) |
-| `references.bib` | Real, verified citations from arXiv, Semantic Scholar, OpenAlex |
-| `experiment runs/` | Generated Python code + sandbox results + metrics |
-| `charts/` | Auto-generated figures with error bars |
-| `reviews.md` | AI peer review with consistency checks |
-| `deliverables/` | Everything in one folder, ready for Overleaf |
+table>
+<tr><td>📄</td><td><code>paper_draft.md</code></td><td>Full academic paper (Introduction, Related Work, Method, Experiments, Results, Conclusion)</td></tr>
+<tr><td>📐</td><td><code>paper.tex</code></td><td>Conference-ready LaTeX (NeurIPS / ICLR / ICML templates)</td></tr>
+<tr><td>📚</td><td><code>references.bib</code></td><td>Real BibTeX references from OpenAlex, Semantic Scholar and arXiv — auto-pruned to match inline citations</td></tr>
+<tr><td>🔍</td><td><code>verification_report.json</code></td><td>4-layer citation integrity + relevance verification (arXiv, CrossRef, DataCite, LLM)</td></tr>
+<tr><td>🧪</td><td><code>experiment runs/</code></td><td>Generated code + sandbox results + structured JSON metrics</td></tr>
+<tr><td>📊</td><td><code>charts/</code></td><td>Auto-generated condition comparison charts with error bars and confidence intervals</td></tr>
+<tr><td>📝</td><td><code>reviews.md</code></td><td>Multi-agent peer review with methodology-evidence consistency checks</td></tr>
+<tr><td>🧬</td><td><code>evolution/</code></td><td>Self-learning lessons extracted from each run</td></tr>
+<tr><td>📦</td><td><code>deliverables/</code></td><td>All final outputs in one folder — compile-ready for Overleaf</td></tr>
+</table>
 
 ---
 
