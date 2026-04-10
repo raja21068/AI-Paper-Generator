@@ -1,0 +1,106 @@
+# ─────────────────────────────────────────────────────────────
+#  AutoResearchClaw — configuration
+#
+#  Quick start:
+#    cp config.example.yaml config.yaml
+#    Fill in the three required fields below, then run:
+#    researchclaw run --topic "Your idea" --auto-approve
+# ─────────────────────────────────────────────────────────────
+
+
+# ── Required ──────────────────────────────────────────────────
+
+project:
+  name: "my-research"          # A short label for this project
+
+research:
+  topic: "Your research idea"  # What you want to research
+
+llm:
+  base_url: "https://api.openai.com/v1"
+  api_key_env: "OPENAI_API_KEY"    # export OPENAI_API_KEY="sk-..." in your shell
+  primary_model: "gpt-4o"
+  fallback_models:
+    - "gpt-4o-mini"
+
+experiment:
+  mode: "sandbox"              # sandbox | docker | ssh_remote  (see below)
+  sandbox:
+    python_path: ".venv/bin/python3"   # Windows: ".venv/Scripts/python.exe"
+
+
+# ── Common options ────────────────────────────────────────────
+
+# research:
+#   domains: ["machine-learning"]   # Helps target literature search
+#   daily_paper_count: 10
+
+# export:
+#   target_conference: "neurips_2025"   # neurips_2025 | iclr_2026 | icml_2026
+#   authors: "Anonymous"
+
+# runtime:
+#   retry_limit: 2              # Retry failed stages this many times
+
+
+# ── Human-in-the-loop (co-pilot mode) ────────────────────────
+# Only needed if you run with --mode co-pilot or similar.
+
+# hitl:
+#   enabled: true
+#   mode: "co-pilot"            # gate-only | checkpoint | co-pilot | step-by-step
+#   cost_budget_usd: 20.0       # Pause when this USD limit is reached
+#   timeouts:
+#     default_human_timeout_sec: 86400  # Wait up to 24h for your input
+
+
+# ── Docker experiment mode ────────────────────────────────────
+# Use this for GPU isolation or complex dependencies.
+# Build image first: docker build -t researchclaw/experiment:latest researchclaw/docker/
+
+# experiment:
+#   mode: "docker"
+#   docker:
+#     image: "researchclaw/experiment:latest"
+#     gpu_enabled: true
+#     memory_limit_mb: 8192
+#     network_policy: "setup_only"  # none | setup_only | pip_only | full
+#     auto_install_deps: true
+
+
+# ── SSH remote experiment mode ────────────────────────────────
+# Run experiments on a remote GPU server.
+
+# experiment:
+#   mode: "ssh_remote"
+#   ssh_remote:
+#     host: "gpu-server.example.com"
+#     user: "yourname"
+#     key_path: "~/.ssh/id_rsa"
+#     gpu_ids: [0]
+#     remote_python: "python3"
+
+
+# ── ACP agent backend (no API key needed) ────────────────────
+# Use Claude Code, Codex CLI, Gemini CLI, etc. as the LLM backend.
+
+# llm:
+#   provider: "acp"
+#   acp:
+#     agent: "claude"   # claude | codex | gemini | gh | kimi | opencode
+
+
+# ── MetaClaw (optional self-learning across runs) ─────────────
+# Requires MetaClaw running separately: metaclaw start --mode skills_only
+
+# metaclaw_bridge:
+#   enabled: true
+#   proxy_url: "http://localhost:30000"
+#   skills_dir: "~/.metaclaw/skills"
+
+
+# ── Custom prompts ────────────────────────────────────────────
+# Copy prompts.default.yaml, edit what you want, point here.
+
+# prompts:
+#   custom_file: "my_prompts.yaml"
